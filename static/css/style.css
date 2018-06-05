@@ -1,0 +1,21 @@
+.add-to-card-btn {
+    width: 100%;
+}
+
+.add-to-card-btn-div {
+    width: 83%;
+    position:absolute;
+    bottom: 20px;
+}
+
+.card-body-container {
+    padding-bottom: 85px;
+}
+.price {
+    position: absolute;
+    bottom: 58px;
+}
+
+.card-title {
+    font-size: 18px;
+}
