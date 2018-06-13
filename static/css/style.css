@@ -1,3 +1,22 @@
+/* start of main css*/
+
+body {
+    background-color: #f6f6f6; 
+}
+
+/* end of main css */
+/* start of home css */
+
+div.card-body-container > .btn-price {
+     position: absolute;
+     bottom: 20px;
+     left: 20px;
+}
+
+.card-body {
+    padding-bottom: 90px;
+}
+
 .add-to-card-btn {
     width: 100%;
 }
@@ -8,14 +27,103 @@
     bottom: 20px;
 }
 
-.card-body-container {
-    padding-bottom: 85px;
-}
-.price {
-    position: absolute;
-    bottom: 58px;
-}
-
 .card-title {
     font-size: 18px;
 }
+
+div.card > .discount {
+    position: absolute;
+    top: 35%;
+    background-color: #5bc35b;
+    padding: 2px 5px 2px 2px;
+    width: 33%;
+    text-align: center;
+    font-weight: 700;
+    color: white;
+    font-size: 18px;
+    border-radius: 0 8px 8px 0;
+}
+
+/* end of home css */
+/* start of item_page css */
+
+div.content > .section1 {
+    margin-top: 40px;
+    border: solid 1px #ddd;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.carousel-container {
+    min-height: 300px;
+    width: 400px;
+}
+
+div.tags > .discount {
+    display: inline-block;
+    font-weight: 700;
+    background-color: #5bc35b;
+    width: 85px;
+    text-align: center;
+    color: white;
+    border-radius: 7px;
+    font-size: 18px;
+}
+
+div.tags > .category {
+    display: inline-block;
+    font-weight: 700;
+    background-color: #cc59a3;
+    width: 110px;
+    text-align: center;
+    color: white;
+    border-radius: 7px;
+    font-size: 18px;
+}
+
+div.item-container > .price {
+    font-size: 36px;
+    font-weight: 300;
+}
+
+div.item-container > div.old-price {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+div.old-price > span.old-price {
+    text-decoration: line-through;
+}
+
+div.item-container > .id {
+    font-size: 24px;
+    margin-top: 10px;
+    color: #bbb;
+}
+
+div.item-container > .btn-container {
+    padding: 0px 125px 10px 0px;
+    margin-top: 10px;
+}
+
+div.btn-container > .btn-success {
+    width: 60%;
+    height: 40px;
+}
+
+.tabs-container{
+    margin: 40px 0 0 0;
+    padding: 0;
+}
+
+div.container > .product-name {
+    margin: 20px 0 30px 0;
+}
+
+.tab-pane {
+    background-color: white;
+    padding: 15px 20px 5px 20px;
+}
+
+/* end of item_page css */
