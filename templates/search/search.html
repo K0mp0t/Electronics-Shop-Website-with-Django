@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <h1 class='text-center' id='search_header'>Поиск по запросу "{{ question }}"</h1>
+        </div>
+    </div>
+    {% if search_results %}
+        <div class='row'>
+            {% for result in search_results %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'product' result.id %}"><img class="card-img-top" src="{{ result.image.url }}" alt=""></a>
+                        {% if result.product.discount %}
+                            <div class='discount'>
+                                {{ result.product.discount }} % off
+                            </div>
+                        {% endif %}
+                        <div class="card-body-container">
+                            <div class='card-body'>
+                                <h4 class="card-title">
+                                    <a href="{% url 'product' result.product.id %}">{{ result.product.name }}</a>
+                                </h4>
+                            </div>
+                            <div class="btn-price">
+                                {% if result.product.price != result.product.price_w_discount %}
+                                    <div class='old-price'>
+                                        <span class='old-price'>{{ result.product.price }} RUB</span>
+                                    </div>
+                                {% endif %}
+                                <h5 class='price'>{{ result.product.price_w_discount }} RUB</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            {% endfor %}
+        </div>
+    {% else %}
+        <h2 class='text-center'>Nothing found</h2>
+    {% endif %}
+</div>
+{% endblock %}

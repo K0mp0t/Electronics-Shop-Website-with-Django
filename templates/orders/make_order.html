@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class='container'>
+    <h1 class='text-center'>Вы собираетесь заказать: </h1>
+    <ul class='items' id='cart-ul'>
+        {% for item in cart_items %}
+            <li class='cart-item' id='{{ item.product.id }}'>
+                <div class='row'>
+                    <div class='col-2 item-pic-container'>
+                        <img src="{{ item.image_url }}" class='item-pic img-fluid rounded'>
+                    </div>
+                    <div class='col-5 item-name'>
+                        <span>{{ item.product.name }}</span>
+                    </div>
+                    <div class='col-2 item-price'>
+                        <span id='item-price'>{{ item.product.price_w_discount }}</span> RUB
+                    </div>
+                    <div class='col-1 item-nmb'>
+                        <span>{{ item.nmb }}</span>
+                    </div>
+                    <div class='col-2 item-total-price'>
+                        <span class='total-amount'>{{ item.total_price }}</span> RUB
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+        <span class='total-bill'>Итого: </span>
+        <div class='nums'>{{ total_nmb }} товаров на сумму <span id='total-order-amount'>{{ total_price }} RUB</span></div>    
+    </ul>
+    <div class='form-container'>
+        <form id='make_order_form' class="form-horizontal" method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class='col-lg-4'>
+                    <label>Имя</label>
+                    <input required type="text" name="{{ form.name.html_name }}" class="form-control" value="{{ request.POST.name }}">
+                    <label>Телефон</label>
+                    <input required type="tel" name="{{ form.phone.html_name }}" class="form-control" placeholder='Телефон в международном формате' value="{{ request.POST.phone }}">
+                    <label>Электронная почта</label>
+                    <input required type="email" name="{{ form.email.html_name }}" class="form-control" value="{{ request.POST.email }}">
+                </div>
+                <div class="col-lg-8">
+                    <label>Комментарии к заказу</label>
+                    <textarea name="{{ form.comments.html_name }}" class="form-control comments" value="{{ request.POST.comments }}"></textarea>
+                </div>
+            </div>
+            <div class='form-row'>
+                <div class='col align-self-end'>
+                    <a href='{% url "make_order" %}'>
+                        <button type='submit' class='btn btn-dark make-order-button'>Оформить заказ</button>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

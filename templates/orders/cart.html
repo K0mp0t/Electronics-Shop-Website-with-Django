@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class='container'>
+    <h1 class='text-center cart-header'>Корзина</h1>
+    <div id='items-container' class='hidden'>
+        <ul class='items' id='cart-ul'>
+            {% for item in cart_items %}
+                <li class='cart-item' id='{{ item.product.id }}'>
+                    <div class='row'>
+                        <div class='col-2 item-pic-container'>
+                            <img src="{{ item.image_url }}" class='item-pic img-fluid rounded'>
+                        </div>
+                        <div class='col-5 item-name'>
+                            <span id='item-name'>{{ item.product.name }}</span>
+                        </div>
+                        <div class='col-2 item-price'>
+                            <span id='item-price'>{{ item.product.price_w_discount }}</span> RUB
+                        </div>
+                        <div class='col-1 item-nmb'>
+                            <input value='{{ item.nmb }}' id='{{ item.product.id }}' type='number' class='nmb-input' min=1>
+                        </div>
+                        <div class='col-2 item-total-price'>
+                            <span class='total-amount'>{{ item.total_price }}</span> RUB
+                            <a class='delete' onclick="deleteCartItem({{ item.id }});" data-url='{% url "cart_update" %}'>
+                                <img src='{% static "img/delete.svg" %}'>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            <span class='total-bill'>Итого: </span>
+            <div class='nums'>{{ total_nmb }} товаров на сумму <span id='total-order-amount'>{{ total_price }} RUB</span></div>    
+        </ul>
+        <a href='{% url "make_order" %}'>
+            <button class='btn btn-dark' type='submit' id='make_order' data-url='{% url "pre_make_order" %}' onclick='preMakeOrder()'>Оформить заказ</button>
+        </a>
+    </div>
+    <div class='hidden' id='cart-empty'>
+        <img class='cart-image' src='{% static "img/cart_black.svg" %}'>
+        <h3 class='text-center'>Ваша корзина пуста</h3>
+    </div>
+</div>
+<script src="{% static 'js/cart_scripts.js' %}"></script>
+{% endblock %}

@@ -56,8 +56,20 @@
                     <div class='price'>
                         <span>{{ product.price_w_discount }} RUB</span>
                     </div>
-                    <div class='btn-container'>
-                        <button class='btn btn-success'>Добавить в корзину</button>
+                    <div>
+                        <form id='nmb_form' action='{% url "cart_update" %}'>{% csrf_token %}
+                            <span class='choose-nmb'>Выберите колличество: </span>
+                            <input type='number' id='number' class='form-control choose-nmb' min=1 value=1 required>
+                            <div class='btn-container'>
+                                <button type='submit' class='btn btn-dark' id='submit-btn'
+                                    data-product_id='{{ product.id }}'
+                                    data-product_price='{{ product.price_w_discount }}'
+                                    data-product_name='{{ product.name }}'>
+                                    <img src='{% static "img/cart_white.svg" %}'>
+                                    Добавить в корзину
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

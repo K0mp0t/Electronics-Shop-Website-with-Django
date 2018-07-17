@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class='container'>
+    <h1 class='text-center' id='category_header'>{{ category.name }}</h1>
+    <div class='row'>
+        {% for product_image in product_images %}    
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <a href="{% url 'product' product_image.product.id %}"><img class="card-img-top" src="{{ product_image.image.url }}" alt=""></a>
+                    {% if product_image.product.discount %}
+                        <div class='discount'>
+                            {{ product_image.product.discount }} % off
+                        </div>
+                    {% endif %}
+                    <div class="card-body-container">
+                        <div class='card-body'>
+                            <h4 class="card-title">
+                                <a href="{% url 'product' product_image.product.id %}">{{ product_image.product.name }}</a>
+                            </h4>
+                        </div>
+                        <div class="btn-price">
+                            {% if product_image.product.price != product_image.product.price_w_discount %}
+                                <div class='old-price'>
+                                    <span class='old-price'>{{ product_image.product.price }} RUB</span>
+                                </div>
+                            {% endif %}
+                            <h5 class='price'>{{ product_image.product.price_w_discount }} RUB</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

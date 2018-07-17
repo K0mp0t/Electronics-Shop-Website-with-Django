@@ -7,16 +7,24 @@
 {% block content %}
     <body>
         <div class="container">
-    
+            {% if alert == True %}
+                <div class="alert alert-success" role="alert" style='
+                    font-size: 18px;
+                    margin-top: 15px;
+                '>
+                    <span>Заказ успешно оформлен.</span>
+                    <span>Номер вашего заказа: {{ order_id }}</span>
+                </div>
+            {% endif %}
             <div class="row">
     
                 <div class="col-lg-3">
     
-                    <h1 class="my-4">Shop Name</h1>
+                    <h1 class="my-4">Каталог</h1>
                     <div class="list-group">
-                        <a href="#" class="list-group-item">Category 1</a>
-                        <a href="#" class="list-group-item">Category 2</a>
-                        <a href="#" class="list-group-item">Category 3</a>
+                        {% for product_category in product_categories %}
+                            <a href="{% url 'category' product_category.name %}" class="list-group-item">{{ product_category.name }}</a>
+                        {% endfor %}   
                     </div>
     
                 </div>
@@ -69,10 +77,12 @@
                                             </h4>
                                         </div>
                                         <div class="btn-price">
+                                            {% if product_image.product.price != product_image.product.price_w_discount %}
+                                                <div class='old-price'>
+                                                    <span class='old-price'>{{ product_image.product.price }} RUB</span>
+                                                </div>
+                                            {% endif %}
                                             <h5 class='price'>{{ product_image.product.price_w_discount }} RUB</h5>
-                                            <button class="btn btn-success add-to-card-btn">
-                                                Добавить в корзину
-                                            </button>
                                         </div>
                                     </div>
                                 </div>

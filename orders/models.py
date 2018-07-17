@@ -2,12 +2,14 @@ from django.db import models
 from items.models import Product
 from django.db.models.signals import post_save
 import datetime
+from items.models import ProductImage
 
 class Order(models.Model):
     STATUS_CHOICES = (('В обработке', 'В обработке'), ('Отправлен', 'Отправлен'), ('Выполнен', 'Выполнен'), ('Отменен', 'Отменен'))
     
     customer_name = models.CharField(default=None, blank=True, null=True, max_length=128)
     customer_email = models.EmailField(default=None, blank=True, null=True)
+    customer_phone = models.CharField(default=None, blank=True, null=True, max_length=14)
     comments = models.TextField(default=None, blank=True, null=True)
     status = models.CharField(max_length=24, choices=STATUS_CHOICES, default=None, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -60,3 +62,32 @@ def product_in_order_post_save(sender, instance, created, **kwargs):
     instance.order.save(force_update=True)
 
 post_save.connect(product_in_order_post_save, sender=ProductInOrder)
+   
+class ProductInCart(models.Model):
+
+    session_key = models.CharField(max_length=128, blank=True, null=True, default=None)   
+    product = models.ForeignKey(Product, default=None, blank=True, null=True, on_delete=models.CASCADE)
+    nmb = models.IntegerField(default=1)
+    price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    image_url = models.CharField(max_length=128, blank=True, null=True, default=None)  
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    
+    
+    def __str__(self):
+        return 'Товар № %s' % self.id
+    
+    class Meta:
+        verbose_name='Товар в корзине'
+        verbose_name_plural='Товары в корзине'
+    
+    def save(self, *args, **kwargs):
+        
+        price_per_item = self.product.price_w_discount
+        self.price_per_item = price_per_item
+        self.total_price = self.nmb * price_per_item
+        product_image = ProductImage.objects.get(product=self.product, is_main=True)
+        self.image_url = product_image.image.url
+
+        super(ProductInCart, self).save(*args, **kwargs)
